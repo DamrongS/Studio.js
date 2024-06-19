@@ -1,0 +1,43 @@
+let workspace;
+let part1;
+let part2;
+
+function setup() 
+{
+  createCanvas(800, 800);
+  workspace = new Workspace();
+
+  part1 = createPart(workspace, "Part1", createVector(200, 200), createVector(30, 30), createVector(0, 0, 0), "Block", false);
+  part2 = createPart(workspace, "Part2", createVector(190, 240), createVector(30, 30), createVector(0, 0, 0), "Block", false);
+
+}
+
+function draw() 
+{
+  background(51);
+  WorkspacePhysicsHandler();
+}
+
+function WorkspacePhysicsHandler()
+{
+  for (let child of workspace.children) {
+    let pointOfApplication = computeDynamicPoint(child);
+    child.applyForce(workspace.gravity, pointOfApplication);
+    child.rotate(); // Update rotation based on angular velocity
+  }
+
+  workspace.updatePhysics();
+  workspace.draw();
+}
+
+function createPart(Parent, Name = "Part", Position = createVector(0, 0), Size = createVector(5, 5), Orientation = createVector(0, 0, 0), Shape = "Block", Anchored = false) {
+  let part = new Part(Parent);
+  part.Name = Name;
+  part.Position = Position;
+  part.Size = Size;
+  part.Orientation = Orientation;
+  part.Shape = Shape;
+  part.Anchored = Anchored;
+  // No need to set Parent here, as it's already set in Part constructor
+  return part;
+}

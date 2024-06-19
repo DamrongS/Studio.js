@@ -6,11 +6,6 @@ class Instance
         this.Name = "Instance";
         this.Parent = Parent;
         this.Children = [];
-        
-        if (this.Parent) 
-        {
-            this.Parent.addChild(this);
-        }
     }
 
     addChild(child) 
@@ -40,4 +35,10 @@ class Instance
 
         return name;
     }
+
+    IsA(Class)
+    {
+        return this.ClassName == Class;
+    }
+
 }
